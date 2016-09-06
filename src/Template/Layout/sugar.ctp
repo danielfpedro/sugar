@@ -18,73 +18,50 @@
     <?= $this->Html->css('../lib/animate.css/animate.min') ?>
 
     <!--  Light Bootstrap Table core CSS    -->
-    <?= $this->Html->css('light-bootstrap-dashboard') ?>
+    <?= $this->Html->css('style') ?>
+    <?= $this->Html->css('../lib/optiscroll/dist/optiscroll') ?>
+    <?= $this->Html->css('sugar-custom-scroll') ?>
 
     <!--     Fonts and icons     -->
-    <?= $this->Html->css('../lib/font-awesome/css/font-awesome.min') ?>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'> -->
 
     <?= $this->Html->css('../lib/font-awesome/css/font-awesome.min') ?>
-    <?= $this->Html->css('../lib/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox') ?>
+    <!-- <?= $this->Html->css('../lib/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox') ?> -->
 
     <?= $this->fetch('css') ?>
 </head>
 <body>
 
-<div class="wrapper">
-    
-	<?= $this->cell('sidebar', [$dashboardOptions['name']]) ?>	
+	<?= $this->element('navbar') ?>
 
-    <div class="main-panel">
-        
-		<?= $this->cell('topbar') ?>	
-
-        <?= $this->fetch('content') ?>
-
-        <footer class="footer">
-            <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul>
-                        <li>
-                            <a href="#">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Company
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                               Blog
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <p class="copyright pull-right">
-                    &copy; 2016 <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                </p>
-            </div>
-        </footer>
-
-    </div>
-</div>
-
+	<div class="sugar-container">
+		<aside class="sugar-sidebar optiscroll" style="">
+			<?php
+				for ($i=0; $i < 100; $i++) { 
+					echo "dasds<br>";
+				}
+			?>		
+		</aside>
+		<main class="sugar-content">
+			fds
+			asd
+			sa
+		</main>
+	</div>
 
 </body>
 
     <!--   Core JS Files   -->
     <?= $this->Html->script('../lib/jquery/dist/jquery.min') ?>
     <?= $this->Html->script('../lib/bootstrap/dist/js/bootstrap.min') ?>
+    <?= $this->Html->script('../lib/optiscroll/dist/jquery.optiscroll.min') ?>
 
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<?= $this->Html->script('light-bootstrap-dashboard') ?>
 	<?= $this->fetch('script') ?>
+
+	<script>
+		$(function(){
+			$(".sugar-sidebar").optiscroll();
+		});
+	</script>
 
 </html>

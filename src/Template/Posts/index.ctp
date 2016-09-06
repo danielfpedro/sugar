@@ -1,5 +1,13 @@
 <div class="content">
     <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+<ol class="breadcrumb">
+  <li class="active">Posts</li>
+</ol>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -83,12 +91,25 @@
                                         <td>Niger</td>
                                         <td>Oud-Turnhout</td>
                                         <td class="text-right">
-                                            <a href="#">
-                                                <span class="fa fa-pencil"></span> Editar
-                                            </a>
-                                            <a href="#" class="text-danger">
-                                                <span class="fa fa-remove"></span> Remover
-                                            </a>                                            
+                                            <div class="dropdown">
+                                            <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            Opções
+                                            <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li>
+                                                <a href="#">
+                                                    <span class="fa fa-pencil fa-fw"></span> Editar
+                                                </a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li>
+                                                <a href="#" class="text-danger">
+                                                    <span class="fa fa-remove fa-fw"></span> Remover
+                                                </a>
+                                            </li>
+                                            </ul>
+                                            </div>                                          
                                         </td>
                                     </tr>
                                 <?php endfor ?>

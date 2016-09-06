@@ -19,6 +19,7 @@
     "bootstrap": "^3.3.7",
     "animate.css": "^3.5.2",
     "font-awesome": "^4.6.3",
-    "awesome-bootstrap-checkbox": "^0.3.7"
+    "awesome-bootstrap-checkbox": "^0.3.7",
+    "optiscroll": "^2.0.0"
   }
 }

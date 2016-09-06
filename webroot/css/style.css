@@ -1,0 +1,32 @@
+html {
+    min-height: 100%;
+}
+html, body {
+    height: 100%;
+}
+.sugar-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    padding-top: 51px;
+}
+
+.sugar-sidebar {
+    background-color: green;
+    width: 260px;
+    max-height: 100%;
+
+    overflow: hidden;
+}
+.sugar-content {
+    background-color: red;
+    flex: 1;
+}
+
+/*NAVBAR*/
+.sugar-navbar-body {
+    margin-left: 245px!important;
+}
+.sugar-navbar-main-control {
+    margin-right: 15px;
+}

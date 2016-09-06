@@ -52,7 +52,8 @@ class PostsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('title');
+            ->requirePresence('title', 'create')
+            ->notEmpty('title');
 
         return $validator;
     }
