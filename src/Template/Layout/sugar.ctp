@@ -36,16 +36,48 @@
 
 	<div class="sugar-container">
 		<aside class="sugar-sidebar optiscroll" style="">
-			<?php
-				for ($i=0; $i < 100; $i++) { 
-					echo "dasds<br>";
-				}
-			?>		
+
+			<div class="sugar-sidebar-overlay"></div>
+
+			<ul class="nav nav-pills nav-stacked sugar-nav-sidebar main-sidebar">
+<!-- 				<?php for ($i = 1; $i < 100; $i++): ?>
+					<li class="has-submenu">
+						<a href="#" class="active">
+							<span class="fa fa-envelope fa-fw"></span>
+							Olá gente
+						</a>
+						<ul class="nav nav-pills nav-stacked sugar-nav-sidebar submenu">
+							<li>
+								<a href="#">
+									Oi zhanti
+								</a>
+							</li>
+						</ul>
+					</li>					
+				<?php endfor ?> -->
+				<li class="has-submenu">
+					<a href="#" class="active">
+						<span class="fa fa-envelope fa-fw"></span>
+						Olá gente
+					</a>
+					<ul class="nav nav-pills nav-stacked sugar-nav-sidebar submenu">
+						<li>
+							<a href="#">
+								Oi zhanti
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">
+						<span class="fa fa-shopping-cart fa-fw"></span>	
+						Olá gente
+					</a>
+				</li>
+			</ul>	
 		</aside>
 		<main class="sugar-content">
-			fds
-			asd
-			sa
+			<?= $this->fetch('content') ?>
 		</main>
 	</div>
 
@@ -61,6 +93,45 @@
 	<script>
 		$(function(){
 			$(".sugar-sidebar").optiscroll();
+			$('.has-submenu').click(function(){
+				var $this = $(this);
+				var orientation = $this.orientation;
+				var $caret = $('.has-submenu > a > #caret');
+
+				$this.find('ul').slideToggle();
+
+				if ($this.hasClass('submenu-open')) {
+					$this
+						.removeClass('submenu-open');
+					$caret
+						.removeClass('fa-caret-up')
+						.addClass('fa-caret-down');
+				} else {
+					$this
+						.addClass('submenu-open');
+					$caret
+						.removeClass('fa-caret-down')
+						.addClass('fa-caret-up');
+				}
+
+				return false;
+			})
+			$('.has-submenu > a')
+				.append('<span class="fa fa-caret-down" id="caret"></span>');
+
+			// $('.sidebar > li').each(function(){
+			// 	var $this = $(this);
+			// 	var $a = $this.find('a');
+			// 	var icon = $a.data('icon');
+
+			// 	if (icon) {
+			// 		$icon = $('<span/>')
+			// 			.addClass('fa fa-'+icon)
+			// 			.hide();
+			// 		$a
+			// 			.prepend($icon.fadeIn());
+			// 	}
+			// });
 		});
 	</script>
 

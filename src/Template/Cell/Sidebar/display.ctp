@@ -8,11 +8,6 @@
         </div>
 
         <ul class="nav">
-            <?php foreach ($items as $item): ?>
-                <li>
-                    <?= $this->Html->link("<p>" . $item['label'] . "</p>", $item['url'], ['escape' => false]) ?>
-                </li>
-            <?php endforeach ?>
             <li class="active">
                 <a href="user.html">
                     <i class="pe-7s-user"></i>
