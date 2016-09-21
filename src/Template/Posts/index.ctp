@@ -8,9 +8,13 @@
             echo $this->Html->getCrumbList();
         ?>
     <div class="sugar-breadcrumb-tools">
-        <button class="btn btn-default">
-            <span class="fa fa-envelope"></span> Novo Post
-        </button>
+        <?= $this->Html->link($this->Html->faicon('envelope') . ' Novo Post' , [
+            'controller' => 'Posts',
+            'action' => 'add'
+        ], [
+            'escape' => false,
+            'class' => 'btn btn-default'
+        ]) ?>
     </div>
 </div>
 
@@ -40,17 +44,18 @@
 
 <div class="panel panel-default sugar-panel-content">
     <table class="table table-hover table-striped">
+        
+        <thead>
+            <tr>
+                <th>
+                    Nome
+                </th>
+                <th class="text-center" style="width: 120px;">
+                    <span class="fa fa-cog"></span>
+                </th>
+            </tr>
+        </thead>
         <tbody>
-            <thead>
-                <tr>
-                    <th>
-                        Nome
-                    </th>
-                    <th class="text-center" style="width: 120px;">
-                        <span class="fa fa-cog"></span>
-                    </th>
-                </tr>
-            </thead>
             <tr>
                 <td>
                     Daniel de Faria Pedro

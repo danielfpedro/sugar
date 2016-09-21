@@ -21,6 +21,7 @@
     <?= $this->Html->css('style') ?>
     <?= $this->Html->css('../lib/optiscroll/dist/optiscroll') ?>
     <?= $this->Html->css('sugar-custom-scroll') ?>
+    <?= $this->Html->css('../lib/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox') ?>
 
     <!--     Fonts and icons     -->
     <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'> -->

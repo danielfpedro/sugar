@@ -16,10 +16,27 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 
+use Cake\Event\Event;
+use Cake\Event\EventManager;
+
 /**
  * Additional bootstrapping and configuration for CLI environments should
  * be put here.
  */
+
+EventManager::instance()->on(
+    'Bake.beforeRender.Controller.controller',
+    function (Event $event) {
+        $view = $event->subject();
+        
+        $view->viewVars['actions'] = [
+            'index',
+            'form',
+            'login',
+            'delete'
+        ];
+    }
+);
 
 // Set the fullBaseUrl to allow URLs to be generated in shell tasks.
 // This is useful when sending email from shells.

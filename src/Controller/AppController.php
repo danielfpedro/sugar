@@ -45,7 +45,6 @@ class AppController extends Controller
           'className' => 'Bootstrap.BootstrapModal'
         ]
     ];
-
     /**
      * Initialization hook method.
      *
@@ -61,6 +60,18 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        // Auth
+        $this->loadComponent('Auth', [
+            'loginRedirect' => [
+                'controller' => 'Posts',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'authError' => 'Você não pode acessar esta área.',
+        ]);
 
         $this->viewBuilder()->layout('sugar');
     }

@@ -43,12 +43,8 @@ html, body {
     background: -webkit-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
-    
-    z-index: 1;
-
 }
 .sugar-sidebar-overlay {
-    z-index: 0;
     background-image: url(../img/sidebar-3.jpg);
     background-position: center bottom;    
 
@@ -59,7 +55,7 @@ html, body {
     left: 0;
     bottom: 0;
 
-    opacity: .8;
+    opacity: .1;
 }
 .submenu {
     margin-top: 5px;
@@ -127,7 +123,49 @@ html, body {
     margin-top: -35px;
 }
 
+.sugar-panel-form {
+    padding-top: 20px;
+}
+
 /*MAIN FILTER*/
 .sugar-main-filter-search {
     margin-top: 25px;
+}
+
+.panel-login {
+    width: 400px;
+    z-index: 1;
+}
+.sugar-logo-login {
+    text-align: center;
+    display: block;
+}
+.sugar-container-login {
+    height: 100%;
+    width: 100%;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sugar-login-overlay {
+    background-color: green;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+    opacity: 0.4;
+}
+
+.sugar-panel-paginator {
+    display: flex;
+    text-align: right;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}
+.sugar-panel-paginator > ul.pagination {
+    margin-left: 15px;
 }

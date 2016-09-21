@@ -49,8 +49,13 @@
                         <li>
                             <?= $this->Html->link(
                                 $this->Html->faIcon('sign-out fa-fw') . ' Sair',
-                                [],
-                                ['escape' => false]
+                                [
+                                    'controller' => 'Users',
+                                    'action' => 'logout'
+                                ],
+                                [
+                                    'escape' => false
+                                ]
                             ) ?>
                         </li>
                     </ul>
