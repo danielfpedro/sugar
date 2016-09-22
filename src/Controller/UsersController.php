@@ -143,12 +143,10 @@ class UsersController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            /**
-             * Setando a Flag para obrigar o sistema a validar a senha atual.
-             */
-            $this->request->data['precisa_confirmar_senha_atual'] = true;
 
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->patchEntity($user, $this->request->data, [
+                'validate' => 'CheckCurrentPassword',
+            ]);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('As alterações foram salvas com sucesso.'));
 

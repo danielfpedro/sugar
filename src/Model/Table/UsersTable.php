@@ -40,6 +40,13 @@ class UsersTable extends Table
         $this->addBehavior('Timestamp');
     }
 
+    public function beforeSave($event, $entity)
+    {
+        if ($entity->new_password) {
+            $entity->password = $entity->new_password;
+        }
+    }
+
     /**
      * Default validation rules.
      *
@@ -77,33 +84,28 @@ class UsersTable extends Table
                 'message' => 'Você não confirmou a sua nova senha corretamente.'
             ]);
 
+        return $validator;
+    }
+
+    public function validationCheckCurrentPassword(Validator $validator) {
+    
         $validator
-            ->allowEmpty('current_password')
+            ->notEmpty('current_password')
             ->add('current_password', 'confirmaSenhaAtual', [
                 'rule' => function ($value, $context) {
-                    /**
-                     * Eu alguns casos você programador vai querer que o usuario confirmar a senha atual
-                     * dele para alguns algumas coisas e outras horas não. Para dar maior flexibilidade
-                     * só é checado quando estiver nos dados a flag 'precisa_confirmar_senha_atual'.
-                     * Lembrando que vc deve setar essa flag manualmente no controller, não coloque isso
-                     * como um campo do formulário pois o usuário pode retirá-la facilmente.
-                     */
-                    if ($context['data']['precisa_confirmar_senha_atual']) {
-                        $user = $this->get($context['data']['id']);
+                    $user = $this->get($context['data']['id']);
 
-                        if ((new DefaultPasswordHasher)->check($value, $user->password)) {
-                            return true;
-                        }
-                        return false;
+                    if ((new DefaultPasswordHasher)->check($value, $user->password)) {
+                        return true;
                     }
-
-                    return true;
+                    return false;
                 },
                 'message' => 'Você não confirmou a sua nova atual corretamente.'
             ]);
 
         return $validator;
     }
+
 
     /**
      * Returns a rules checker object that will be used for validating

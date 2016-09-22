@@ -72,6 +72,16 @@ class UsersTableTest extends TestCase
     }
 
     /**
+     * Test validationCheckCurrentPassword method
+     *
+     * @return void
+     */
+    public function testValidationCheckCurrentPassword()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
      * Test buildRules method
      *
      * @return void

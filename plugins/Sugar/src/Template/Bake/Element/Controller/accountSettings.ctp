@@ -33,12 +33,10 @@ $compact = ["'" . $singularName . "'"];
             'contain' => [<%= $this->Bake->stringifyList($belongsToMany, ['indent' => false]) %>]
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            /**
-             * Setando a Flag para obrigar o sistema a validar a senha atual.
-             */
-            $this->request->data['precisa_confirmar_senha_atual'] = true;
 
-            $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
+            $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data, [
+                'validate' => 'CheckCurrentPassword',
+            ]);
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
                 $this->Flash->success(__('As alterações foram salvas com sucesso.'));
 
