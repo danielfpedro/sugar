@@ -24,17 +24,22 @@ use Cake\Event\EventManager;
  * be put here.
  */
 
-EventManager::instance()->on(
-    'Bake.beforeRender.Controller.controller',
-    function (Event $event) {
+EventManager::instance()->on('Bake.beforeRender.Controller.controller', function (Event $event) {
+    
         $view = $event->subject();
-        
+
         $view->viewVars['actions'] = [
             'index',
-            'form',
-            'login',
+            'add',
+            'edit',
             'delete'
         ];
+
+        if ($view->viewVars['name'] == 'Users' || $view->viewVars['name'] == 'Usuarios') {
+            $view->viewVars['actions'][] = 'login';
+            $view->viewVars['actions'][] = 'logout';
+            $view->viewVars['actions'][] = 'accountSettings';
+        }
     }
 );
 

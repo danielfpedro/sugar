@@ -18,7 +18,6 @@ class UsersController extends AppController
      */
     public function index()
     {
-
         $q = '%' . str_replace(' ', '%', $this->request->query('q')) . '%';
         
         $this->paginate['conditions'] = [
@@ -32,33 +31,21 @@ class UsersController extends AppController
     }
 
     /**
-     * Edit method
+     * Add method
      *
-     * @param string|null $id User id.
-     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function form($id = null)
+    public function add()
     {
-        $allowedMethods = ['post'];
-
-        if ($id) {
-            $user = $this->Users->get($id, [
-                'contain' => []
-            ]);
-            $allowedMethods = ['patch', 'post', 'put'];
-        } else {
-            $user = $this->Users->newEntity();
-        }
-
-        if ($this->request->is($allowedMethods)) {
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('O user foi salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                $this->Flash->error(__('O user não foi salvo. Por favor, tente novamente.'));
             }
         }
         $this->set(compact('user'));
@@ -66,21 +53,29 @@ class UsersController extends AppController
     }
 
     /**
-     * Login method
+     * Edit method
      *
-     * @return \Cake\Network\Response|void
+     * @param string|null $id User id.
+     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function login()
+    public function edit($id = null)
     {
-        if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
+        $user = $this->Users->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('O user foi salvo com sucesso.'));
 
-                return $this->redirect($this->Auth->redirectUrl());
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('O user não foi salvo. Por favor, tente novamente.'));
             }
-            $this->Flash->error(__('Invalid credentials, try again'));
         }
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
     }
 
     /**
@@ -95,11 +90,74 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
+            $this->Flash->success(__('O user foi deletado.'));
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O user não foi salvo. Por favor, tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Login method
+     *
+     * @return \Cake\Network\Response|void
+     */
+    public function login()
+    {
+        $this->viewBuilder()->layout('login');
+        
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error(__('A combinação Email/Senha informada é inválida.'));
+        }
+    }
+
+    /**
+     * Logout method
+     *
+     * @return \Cake\Network\Response
+     */
+    public function logout()
+    {
+        return $this->redirect($this->Auth->logout());
+    }
+
+    /**
+     * ProfileSettings method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function accountSettings()
+    {
+        $id = $this->Auth->user('id');
+        
+        $user = $this->Users->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            /**
+             * Setando a Flag para obrigar o sistema a validar a senha atual.
+             */
+            $this->request->data['precisa_confirmar_senha_atual'] = true;
+
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('As alterações foram salvas com sucesso.'));
+
+                return $this->redirect(['action' => 'accountSettings']);
+            } else {
+                $this->Flash->error(__('As alterações não foram salvas. Por favor, tente novamente.'));
+            }
+        }
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
     }
 }

@@ -12,33 +12,43 @@
  * @since         0.1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
+$belongsTo = $this->Bake->aliasExtractor($modelObj, 'BelongsTo');
+$belongsToMany = $this->Bake->aliasExtractor($modelObj, 'BelongsToMany');
 $compact = ["'" . $singularName . "'"];
 %>
 
     /**
-     * Add method
+     * ProfileSettings method
      *
-     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
+     * @param string|null $id <%= $singularHumanName %> id.
+     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function add()
+    public function accountSettings()
     {
-        $<%= $singularName %> = $this-><%= $currentModelName %>->newEntity();
-        if ($this->request->is('post')) {
+        $id = $this->Auth->user('id');
+        
+        $<%= $singularName %> = $this-><%= $currentModelName %>->get($id, [
+            'contain' => [<%= $this->Bake->stringifyList($belongsToMany, ['indent' => false]) %>]
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            /**
+             * Setando a Flag para obrigar o sistema a validar a senha atual.
+             */
+            $this->request->data['precisa_confirmar_senha_atual'] = true;
+
             $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
-                $this->Flash->success(__('O <%= strtolower($singularHumanName) %> foi salvo com sucesso.'));
+                $this->Flash->success(__('As alterações foram salvas com sucesso.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'accountSettings']);
             } else {
-                $this->Flash->error(__('O <%= strtolower($singularHumanName) %> não foi salvo. Por favor, tente novamente.'));
+                $this->Flash->error(__('As alterações não foram salvas. Por favor, tente novamente.'));
             }
         }
 <%
-        $associations = array_merge(
-            $this->Bake->aliasExtractor($modelObj, 'BelongsTo'),
-            $this->Bake->aliasExtractor($modelObj, 'BelongsToMany')
-        );
-        foreach ($associations as $assoc):
+        foreach (array_merge($belongsTo, $belongsToMany) as $assoc):
             $association = $modelObj->association($assoc);
             $otherName = $association->target()->alias();
             $otherPlural = $this->_variableName($otherName);

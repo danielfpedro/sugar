@@ -30,11 +30,31 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test form method
+     * Test add method
      *
      * @return void
      */
-    public function testForm()
+    public function testAdd()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test edit method
+     *
+     * @return void
+     */
+    public function testEdit()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test delete method
+     *
+     * @return void
+     */
+    public function testDelete()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
@@ -50,11 +70,21 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test delete method
+     * Test logout method
      *
      * @return void
      */
-    public function testDelete()
+    public function testLogout()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test accountSettings method
+     *
+     * @return void
+     */
+    public function testAccountSettings()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

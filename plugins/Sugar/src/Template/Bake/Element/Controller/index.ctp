@@ -26,8 +26,8 @@
         $this->paginate = [
             'contain' => [<%= $this->Bake->stringifyList($belongsTo, ['indent' => false]) %>]
         ];
+        
 <% endif; %>
-
         $q = '%' . str_replace(' ', '%', $this->request->query('q')) . '%';
         
         $this->paginate['conditions'] = [

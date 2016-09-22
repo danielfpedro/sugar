@@ -42,6 +42,11 @@ $uses = [
     'use Cake\ORM\Table;',
     'use Cake\Validation\Validator;'
 ];
+
+if ($name == 'Users' || $name = 'Usuarios') {
+    $uses[] = 'use Cake\Auth\DefaultPasswordHasher;';
+}
+
 sort($uses);
 echo implode("\n", $uses);
 %>
@@ -156,6 +161,44 @@ foreach ($validation as $field => $rules):
     endif;
 endforeach;
 %>
+
+        $validator
+            ->allowEmpty('new_password')
+            ->add('new_password', 'confirmaSenha', [
+                'rule' => function ($value, $context) {
+                    if ($value) {
+                        return ($value == $context['data']['confirm_new_password']);
+                    }
+                    return true;
+                },
+                'message' => 'Você não confirmou a sua nova senha corretamente.'
+            ]);
+
+        $validator
+            ->allowEmpty('current_password')
+            ->add('current_password', 'confirmaSenhaAtual', [
+                'rule' => function ($value, $context) {
+                    /**
+                     * Eu alguns casos você programador vai querer que o usuario confirmar a senha atual
+                     * dele para alguns algumas coisas e outras horas não. Para dar maior flexibilidade
+                     * só é checado quando estiver nos dados a flag 'precisa_confirmar_senha_atual'.
+                     * Lembrando que vc deve setar essa flag manualmente no controller, não coloque isso
+                     * como um campo do formulário pois o usuário pode retirá-la facilmente.
+                     */
+                    if ($context['data']['precisa_confirmar_senha_atual']) {
+                        $user = $this->get($context['data']['id']);
+
+                        if ((new DefaultPasswordHasher)->check($value, $user->password)) {
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    return true;
+                },
+                'message' => 'Você não confirmou a sua nova atual corretamente.'
+            ]);
+
         return $validator;
     }
 <% endif %>

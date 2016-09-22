@@ -21,6 +21,8 @@
      */
     public function login()
     {
+        $this->viewBuilder()->layout('login');
+        
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
@@ -28,6 +30,6 @@
 
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error(__('Invalid credentials, try again'));
+            $this->Flash->error(__('A combinação Email/Senha informada é inválida.'));
         }
     }

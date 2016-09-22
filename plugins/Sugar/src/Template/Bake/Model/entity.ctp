@@ -40,6 +40,7 @@ if (!isset($fields) || $fields !== false) {
 namespace <%= $namespace %>\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Auth\DefaultPasswordHasher;
 
 <%= $this->DocBlock->classDescription($name, 'Entity', $annotations) %>
 class <%= $name %> extends Entity
@@ -69,4 +70,12 @@ class <%= $name %> extends Entity
 <% if (empty($accessible) && empty($hidden)): %>
 
 <% endif %>
+
+    protected function _setPassword($password)
+    {
+        if (strlen($password) > 0) {
+          return (new DefaultPasswordHasher)->hash($password);
+        }
+    }
+
 }
