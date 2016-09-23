@@ -18,6 +18,10 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['Roles']
+        ];
+        
         $q = '%' . str_replace(' ', '%', $this->request->query('q')) . '%';
         
         $this->paginate['conditions'] = [
@@ -48,7 +52,8 @@ class UsersController extends AppController
                 $this->Flash->error(__('O user não foi salvo. Por favor, tente novamente.'));
             }
         }
-        $this->set(compact('user'));
+        $roles = $this->Users->Roles->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'roles'));
         $this->set('_serialize', ['user']);
     }
 
@@ -74,7 +79,8 @@ class UsersController extends AppController
                 $this->Flash->error(__('O user não foi salvo. Por favor, tente novamente.'));
             }
         }
-        $this->set(compact('user'));
+        $roles = $this->Users->Roles->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'roles'));
         $this->set('_serialize', ['user']);
     }
 
@@ -155,7 +161,8 @@ class UsersController extends AppController
                 $this->Flash->error(__('As alterações não foram salvas. Por favor, tente novamente.'));
             }
         }
-        $this->set(compact('user'));
+        $roles = $this->Users->Roles->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'roles'));
         $this->set('_serialize', ['user']);
     }
 }

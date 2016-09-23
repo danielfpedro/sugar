@@ -1,14 +1,14 @@
 
 <!-- Breadcrumb -->
 <div class="sugar-breadcrumb">
-    <h1>Posts</h1>
+    <h1>Roles</h1>
     <?php
-        $this->Html->addCrumb('Posts /');
+        $this->Html->addCrumb('Roles /');
         echo $this->Html->getCrumbList();
     ?>
     <!-- Botão Adicionar registro -->
     <div class="sugar-breadcrumb-tools">
-        <?= $this->Html->link('Novo Post' , [
+        <?= $this->Html->link('Novo Role' , [
             'action' => 'add'
         ], [
             'escape' => false,
@@ -27,7 +27,7 @@
                     <input
                         type="text"
                         name="q"
-                        placeholder="Title"
+                        placeholder="Name"
                         class="form-control"
                         value="<?= h($this->request->query('q'))?>">
                 </div>
@@ -49,7 +49,7 @@
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('title') ?></th>
+                    <th><?= $this->Paginator->sort('name') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
                     <th><?= $this->Paginator->sort('modified') ?></th>
                         <th style="width: 120px;">
@@ -58,12 +58,12 @@
             </thead>
             <!-- Body com os dados -->
             <tbody>
-                <?php foreach ($posts as $post): ?>
+                <?php foreach ($roles as $role): ?>
                 <tr>
-                        <td><?= $this->Number->format($post->id) ?></td>
-                        <td><?= h($post->title) ?></td>
-                        <td><?= h($post->created) ?></td>
-                        <td><?= h($post->modified) ?></td>
+                        <td><?= $this->Number->format($role->id) ?></td>
+                        <td><?= h($role->name) ?></td>
+                        <td><?= h($role->created) ?></td>
+                        <td><?= h($role->modified) ?></td>
                         <!-- Botões de Ação -->
                     <td class="text-right">
                         <!-- Botão Editar -->
@@ -71,7 +71,7 @@
                             '<span class="fa fa-pencil"></span>',
                             [
                                 'action' => 'edit',
-                                $post->id
+                                $role->id
                             ],
                             [
                                 'escape' => false,
@@ -83,12 +83,12 @@
                             '<span class="fa fa-remove"></span>',
                             [
                                 'action' => 'delete',
-                                $post->id],
+                                $role->id],
                             [
                                 'escape' => false,
                                 'class' => 'btn btn-default btn-sm',
                                 'confirm' => __('Você realmente deseja deletar registro de ID {0}?',
-                                $post->id)
+                                $role->id)
                             ])
                         ?>
                     </td>

@@ -43,7 +43,7 @@ $uses = [
     'use Cake\Validation\Validator;'
 ];
 
-if ($name == 'Users' || $name = 'Usuarios') {
+if ($name == 'Users' || $name == 'Usuarios') {
     $uses[] = 'use Cake\Auth\DefaultPasswordHasher;';
 }
 
@@ -161,40 +161,44 @@ foreach ($validation as $field => $rules):
     endif;
 endforeach;
 %>
-
-        $validator
-            ->allowEmpty('new_password')
-            ->add('new_password', 'confirmaSenha', [
-                'rule' => function ($value, $context) {
-                    if ($value) {
-                        return ($value == $context['data']['confirm_new_password']);
-                    }
-                    return true;
-                },
-                'message' => 'Você não confirmou a sua nova senha corretamente.'
-            ]);
-
-        return $validator;
-    }
-
-    public function validationCheckCurrentPassword(Validator $validator) {
-    
-        $validator
-            ->notEmpty('current_password')
-            ->add('current_password', 'confirmaSenhaAtual', [
-                'rule' => function ($value, $context) {
-                    $user = $this->get($context['data']['id']);
-
-                    if ((new DefaultPasswordHasher)->check($value, $user->password)) {
+        <% if ($name == 'Users' || $name == 'Usuarios'): %>
+            $validator
+                ->allowEmpty('new_password')
+                ->add('new_password', 'confirmaSenha', [
+                    'rule' => function ($value, $context) {
+                        if ($value) {
+                            return ($value == $context['data']['confirm_new_password']);
+                        }
                         return true;
-                    }
-                    return false;
-                },
-                'message' => 'Você não confirmou a sua nova atual corretamente.'
-            ]);
+                    },
+                    'message' => 'Você não confirmou a sua nova senha corretamente.'
+                ]);
+        <% endIf %>
 
         return $validator;
     }
+
+    <% if ($name == 'Users' || $name == 'Usuarios'): %>
+        public function validationCheckCurrentPassword(Validator $validator) {
+        
+            $validator
+                ->notEmpty('current_password')
+                ->add('current_password', 'confirmaSenhaAtual', [
+                    'rule' => function ($value, $context) {
+                        $user = $this->get($context['data']['id']);
+
+                        if ((new DefaultPasswordHasher)->check($value, $user->password)) {
+                            return true;
+                        }
+                        return false;
+                    },
+                    'message' => 'Você não confirmou a sua nova atual corretamente.'
+                ]);
+
+            return $validator;
+        }
+    <% endIf %>
+    
 
 <% endif %>
 <% if (!empty($rulesChecker)): %>

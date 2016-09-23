@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Roles
+ *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -38,13 +40,25 @@ class UsersTable extends Table
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Roles', [
+            'foreignKey' => 'role_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
-    public function beforeSave($event, $entity)
+    public function findAuth(\Cake\ORM\Query $query, array $options)
     {
-        if ($entity->new_password) {
-            $entity->password = $entity->new_password;
-        }
+        $query
+            ->select(['id', 'name', 'password', 'role_id'])
+            ->contain([
+                'Roles' => function ($q) {
+                    return $q
+                        ->select(['id', 'name']);
+                }
+            ]);
+
+        return $query;
     }
 
     /**
@@ -71,40 +85,40 @@ class UsersTable extends Table
             ->requirePresence('password', 'create')
             ->notEmpty('password');
 
-
-        $validator
-            ->allowEmpty('new_password')
-            ->add('new_password', 'confirmaSenha', [
-                'rule' => function ($value, $context) {
-                    if ($value) {
-                        return ($value == $context['data']['confirm_new_password']);
-                    }
-                    return true;
-                },
-                'message' => 'Você não confirmou a sua nova senha corretamente.'
-            ]);
-
-        return $validator;
-    }
-
-    public function validationCheckCurrentPassword(Validator $validator) {
-    
-        $validator
-            ->notEmpty('current_password')
-            ->add('current_password', 'confirmaSenhaAtual', [
-                'rule' => function ($value, $context) {
-                    $user = $this->get($context['data']['id']);
-
-                    if ((new DefaultPasswordHasher)->check($value, $user->password)) {
+                    $validator
+                ->allowEmpty('new_password')
+                ->add('new_password', 'confirmaSenha', [
+                    'rule' => function ($value, $context) {
+                        if ($value) {
+                            return ($value == $context['data']['confirm_new_password']);
+                        }
                         return true;
-                    }
-                    return false;
-                },
-                'message' => 'Você não confirmou a sua nova atual corretamente.'
-            ]);
-
+                    },
+                    'message' => 'Você não confirmou a sua nova senha corretamente.'
+                ]);
+        
         return $validator;
     }
+
+            public function validationCheckCurrentPassword(Validator $validator) {
+        
+            $validator
+                ->notEmpty('current_password')
+                ->add('current_password', 'confirmaSenhaAtual', [
+                    'rule' => function ($value, $context) {
+                        $user = $this->get($context['data']['id']);
+
+                        if ((new DefaultPasswordHasher)->check($value, $user->password)) {
+                            return true;
+                        }
+                        return false;
+                    },
+                    'message' => 'Você não confirmou a sua nova atual corretamente.'
+                ]);
+
+            return $validator;
+        }
+        
 
 
     /**
@@ -117,6 +131,7 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['username']));
+        $rules->add($rules->existsIn(['role_id'], 'Roles'));
 
         return $rules;
     }

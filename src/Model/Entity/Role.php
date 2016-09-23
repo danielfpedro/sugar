@@ -5,14 +5,16 @@ use Cake\ORM\Entity;
 use Cake\Auth\DefaultPasswordHasher;
 
 /**
- * Post Entity
+ * Role Entity
  *
  * @property int $id
- * @property string $title
+ * @property string $name
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
+ *
+ * @property \App\Model\Entity\User[] $users
  */
-class Post extends Entity
+class Role extends Entity
 {
 
     /**

@@ -1,23 +1,37 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $post->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $post->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Posts'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="posts form large-9 medium-8 columns content">
-    <?= $this->Form->create($post) ?>
-    <fieldset>
-        <legend><?= __('Edit Post') ?></legend>
+
+<div class="sugar-breadcrumb">
+    <h1>Adicionar Post</h1>
+    <?php
+        $this->Html->addCrumb('Posts', ['action' => 'index']); 
+        $this->Html->addCrumb('Adicionar Post');
+        echo $this->Html->getCrumbList();
+    ?>
+</div>
+
+<?= $this->Form->create($post, [
+    'horizontal' => true,
+    'novalidate' => true,
+    'columns' => [
+        'label' => 2,
+        'input' => 4,
+        'error' => 6
+    ]
+]) ?>
+
+    <div class="panel panel-default sugar-panel-content sugar-panel-form">
+        <div class="panel-body">
         <?php
             echo $this->Form->input('title');
         ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+        </div>
+    </div>
+
+    <div class="panel panel-default sugar-panel-content">
+        <div class="panel-body text-right">
+            <button type="submit" class="btn btn-primary">
+                <span class="fa fa-check"></span> Salvar
+            </button>
+        </div>
+    </div>
+
+<?= $this->Form->end() ?>

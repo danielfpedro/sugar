@@ -93,7 +93,7 @@
                             [
                                 'escape' => false,
                                 'class' => 'btn btn-default btn-sm',
-                                'confirm' => __('Are you sure you want to delete # {0}?',
+                                'confirm' => __('Você realmente deseja deletar registro de ID {0}?',
                                 $specialPlayer->id)
                             ])
                         ?>

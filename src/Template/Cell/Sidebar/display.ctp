@@ -1,55 +1,85 @@
-<!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
-<div class="sidebar" data-color="blue" data-image="img/sidebar-5.jpg">
-    <div class="sidebar-wrapper" >
-        <div class="logo">
-            <a href="http://www.creative-tim.com" class="simple-text">
-                <?= $name ?>
-            </a>
-        </div>
+<div class="sugar-sidebar-overlay"></div>
 
-        <ul class="nav">
-            <li class="active">
-                <a href="user.html">
-                    <i class="pe-7s-user"></i>
-                    <p>User Profile</p>
-                </a>
+<ul class="nav nav-pills nav-stacked sugar-nav-sidebar main-sidebar">
+    <?php foreach ($items as $title => $item): ?>
+        <?php if ($title): ?>
+            <li class="sugar-sidemenu-title">
+                <?= $title ?>
             </li>
+        <?php endif ?>
+        <?php foreach ($item as $value): ?>
+            <?php if (isset($value['submenu'])): ?>
+
+                <li class="has-submenu">
+                    <?php
+                        $itemsSubmenu = [];
+                        
+                        foreach ($value['submenu'] as $v) {
+                            $hideSubmenu = true;
+                            $v['isActive'] = false;
+
+                            if (isset($v['childs'])) {
+                                foreach ($v['childs'] as $child) {
+                                    if (($child['controller'] == $this->request->params['controller'] && $child['action'] == $this->request->params['action'])) {
+
+                                        $hideSubmenu = false;
+                                        $v['isActive'] = true;
+
+                                        break;
+                                        
+                                    }
+                                }
+                            }
+                            if ($v['url']['controller'] == $this->request->params['controller'] && $v['url']['action'] == $this->request->params['action']) {
+
+                                $hideSubmenu = false;
+                                $v['isActive'] = true;
+                                
+                            }
+                            
+                            $itemsSubmenu[] = $v;
+                        }
+                    ?>
+                    <a href="#" class="<?= (!$hideSubmenu) ? 'active' : '' ?>">
+                        <?= $this->Html->faicon($value['icon']) ?>
+                        <?= $value['label'] ?>
+                    </a>
+                    <ul class="nav nav-pills nav-stacked sugar-nav-sidebar submenu <?= ($hideSubmenu) ? 'sugar-submenu-hidden' : '' ?>">    
+                        <?php foreach ($itemsSubmenu as $v): ?>
+                            <li>
+                                <?= $this->Html->link($v['label'], $v['url'], ['class' => (($v['isActive']) ? 'active' : ''), 'escape' => false]) ?>
+                            </li>                    
+                        <?php endforeach ?>
+                    </ul>
+                </li>
+            <?php else: ?>
+                <?php 
+                    $isActive = ($value['url']['controller'] == $this->request->params['controller'] && $value['url']['action'] == $this->request->params['action']);
+                ?>
+                <li>
+                    <?= $this->Html->link($this->Html->faicon($value['icon']) . $value['label'], $value['url'], ['class' => (($isActive) ? 'active' : ''), 'escape' => false]) ?>
+                </li>
+            <?php endif ?>
+        <?php endforeach ?>
+        <li class="sugar-sidemenu-separator"></li>
+    <?php endforeach ?>
+<!--     <li class="has-submenu">
+        <a href="#" class="active">
+            <span class="fa fa-envelope fa-fw"></span>
+            Olá gente
+        </a>
+        <ul class="nav nav-pills nav-stacked sugar-nav-sidebar submenu">
             <li>
-                <a href="table.html">
-                    <i class="pe-7s-note2"></i>
-                    <p>Table List</p>
-                </a>
-            </li>
-            <li>
-                <a href="typography.html">
-                    <i class="pe-7s-news-paper"></i>
-                    <p>Typography</p>
-                </a>
-            </li>
-            <li>
-                <a href="icons.html">
-                    <i class="pe-7s-science"></i>
-                    <p>Icons</p>
-                </a>
-            </li>
-            <li>
-                <a href="maps.html">
-                    <i class="pe-7s-map-marker"></i>
-                    <p>Maps</p>
-                </a>
-            </li>
-            <li>
-                <a href="notifications.html">
-                    <i class="pe-7s-bell"></i>
-                    <p>Notifications</p>
-                </a>
-            </li>
-    		<li class="active-pro">
-                <a href="upgrade.html">
-                    <i class="pe-7s-rocket"></i>
-                    <p>Upgrade to PRO</p>
+                <a href="#">
+                    Oi zhanti
                 </a>
             </li>
         </ul>
-    </div>
-</div>
+    </li>
+    <li>
+        <a href="#">
+            <span class="fa fa-shopping-cart fa-fw"></span> 
+            Olá gente
+        </a>
+    </li> -->
+</ul>

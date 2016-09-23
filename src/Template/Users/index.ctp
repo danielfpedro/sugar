@@ -54,6 +54,7 @@
                     <th><?= $this->Paginator->sort('modified') ?></th>
                     <th><?= $this->Paginator->sort('username') ?></th>
                     <th><?= $this->Paginator->sort('password') ?></th>
+                    <th><?= $this->Paginator->sort('role_id') ?></th>
                         <th style="width: 120px;">
                     </th>
                 </tr>
@@ -68,6 +69,7 @@
                         <td><?= h($user->modified) ?></td>
                         <td><?= h($user->username) ?></td>
                         <td><?= h($user->password) ?></td>
+                        <td><?= $user->has('role') ? $this->Html->link($user->role->name, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
                         <!-- Botões de Ação -->
                     <td class="text-right">
                         <!-- Botão Editar -->

@@ -2,9 +2,10 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
- * CakePortugue Entity
+ * SpecialPlayer Entity
  *
  * @property int $id
  * @property string $nome
@@ -14,7 +15,7 @@ use Cake\ORM\Entity;
  * @property int $deletado
  * @property \Cake\I18n\Time $dt_deletado
  */
-class CakePortugue extends Entity
+class SpecialPlayer extends Entity
 {
 
     /**
@@ -30,4 +31,12 @@ class CakePortugue extends Entity
         '*' => true,
         'id' => false
     ];
+
+    protected function _setPassword($password)
+    {
+        if (strlen($password) > 0) {
+          return (new DefaultPasswordHasher)->hash($password);
+        }
+    }
+
 }

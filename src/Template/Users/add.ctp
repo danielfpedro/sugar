@@ -24,6 +24,7 @@
             echo $this->Form->input('name');
             echo $this->Form->input('username');
             echo $this->Form->input('password');
+            echo $this->Form->input('role_id', ['options' => $roles]);
         ?>
         </div>
     </div>

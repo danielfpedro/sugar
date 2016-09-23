@@ -73,7 +73,7 @@ html, body {
 .sugar-nav-sidebar > li > a > span#caret{
     float: right;
 }
-.sugar-nav-sidebar > li > a > span.fa {
+.sugar-nav-sidebar > li > a > span.fa, .sugar-nav-sidebar > li > a > i.fa {
     font-size: 20px;
     margin-right: 6px;
 }
@@ -87,13 +87,23 @@ html, body {
     background-color: rgba(255, 255, 255, .3)!important;
 }
 
+.sugar-sidemenu-title {
+    margin-left: 25px;
+    color: #EEE;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding-bottom: 15px;
+    font-weight: bold;
+}
+.sugar-sidemenu-separator {
+    border-bottom: 1px solid red;
+}
+.sugar-submenu-hidden {
+    display: none;
+}
 .submenu > li > a {
     padding-left: 55px;
     font-size: 12px;
-}
-
-.sugar-sidebar ul > li > ul {
-    display: none;
 }
 
 /*BREADCRUMB*/

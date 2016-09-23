@@ -30,16 +30,6 @@ class SpecialPlayersControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test view method
-     *
-     * @return void
-     */
-    public function testView()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
      * Test add method
      *
      * @return void

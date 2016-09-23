@@ -1,14 +1,14 @@
 
 <div class="sugar-breadcrumb">
-    <h1>Adicionar Post</h1>
+    <h1>Adicionar Role</h1>
     <?php
-        $this->Html->addCrumb('Posts', ['action' => 'index']); 
-        $this->Html->addCrumb('Adicionar Post');
+        $this->Html->addCrumb('Roles', ['action' => 'index']); 
+        $this->Html->addCrumb('Adicionar Role');
         echo $this->Html->getCrumbList();
     ?>
 </div>
 
-<?= $this->Form->create($post, [
+<?= $this->Form->create($role, [
     'horizontal' => true,
     'novalidate' => true,
     'columns' => [
@@ -21,7 +21,7 @@
     <div class="panel panel-default sugar-panel-content sugar-panel-form">
         <div class="panel-body">
         <?php
-            echo $this->Form->input('title');
+            echo $this->Form->input('name');
         ?>
         </div>
     </div>

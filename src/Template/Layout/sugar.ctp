@@ -37,45 +37,7 @@
 
 	<div class="sugar-container">
 		<aside class="sugar-sidebar optiscroll" style="">
-
-			<div class="sugar-sidebar-overlay"></div>
-
-			<ul class="nav nav-pills nav-stacked sugar-nav-sidebar main-sidebar">
-<!-- 				<?php for ($i = 1; $i < 100; $i++): ?>
-					<li class="has-submenu">
-						<a href="#" class="active">
-							<span class="fa fa-envelope fa-fw"></span>
-							Olá gente
-						</a>
-						<ul class="nav nav-pills nav-stacked sugar-nav-sidebar submenu">
-							<li>
-								<a href="#">
-									Oi zhanti
-								</a>
-							</li>
-						</ul>
-					</li>					
-				<?php endfor ?> -->
-				<li class="has-submenu">
-					<a href="#" class="active">
-						<span class="fa fa-envelope fa-fw"></span>
-						Olá gente
-					</a>
-					<ul class="nav nav-pills nav-stacked sugar-nav-sidebar submenu">
-						<li>
-							<a href="#">
-								Oi zhanti
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#">
-						<span class="fa fa-shopping-cart fa-fw"></span>	
-						Olá gente
-					</a>
-				</li>
-			</ul>	
+			<?= $this->cell('sidebar') ?>	
 		</aside>
 		<main class="sugar-content">
 			<?= $this->fetch('content') ?>
@@ -93,13 +55,16 @@
 
 	<script>
 		$(function(){
+			
 			$(".sugar-sidebar").optiscroll();
-			$('.has-submenu').click(function(){
-				var $this = $(this);
-				var orientation = $this.orientation;
-				var $caret = $('.has-submenu > a > #caret');
 
-				$this.find('ul').slideToggle();
+			$('.has-submenu > a').click(function(){
+				console.log('Aqui');
+				var $this = $(this);
+				// var orientation = $this.find('parent').orientation;
+				var $caret = $this.find('a#caret');
+
+				$this.siblings('.submenu').slideToggle();
 
 				if ($this.hasClass('submenu-open')) {
 					$this
@@ -110,13 +75,14 @@
 				} else {
 					$this
 						.addClass('submenu-open');
-					$caret
-						.removeClass('fa-caret-down')
-						.addClass('fa-caret-up');
+					// $caret
+					// 	.removeClass('fa-caret-down')
+					// 	.addClass('fa-caret-up');
 				}
 
 				return false;
-			})
+			});
+
 			$('.has-submenu > a')
 				.append('<span class="fa fa-caret-down" id="caret"></span>');
 

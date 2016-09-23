@@ -13,6 +13,9 @@ use Cake\Auth\DefaultPasswordHasher;
  * @property \Cake\I18n\Time $modified
  * @property string $username
  * @property string $password
+ * @property int $role_id
+ *
+ * @property \App\Model\Entity\Role $role
  */
 class User extends Entity
 {

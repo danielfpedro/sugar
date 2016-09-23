@@ -22,19 +22,61 @@ class SidebarCell extends Cell
      *
      * @return void
      */
-    public function display($name)
+    public function display()
     {
         $items = [
-            [
-                'label' => 'Posts',
-                'icon' => 'pencil',
-                'url' => [
-                    'controller' => '',
-                    'action'
+            null => [
+                [
+                    'label' => 'Posts',
+                    'icon' => 'pencil-square-o',
+                    'url' => [
+                        'controller' => 'Posts',
+                        'action' => 'index'
+                    ]
+                ],
+            ],
+            'Sistema' => [
+                [
+                    'label' => 'configurações',
+                    'icon' => 'users',
+                    'submenu' => [
+                        [
+                            'label' => 'Posts',
+                            'icon' => 'list',
+                            'url' => [
+                                'controller' => 'Posts',
+                                'action' => 'index'
+                            ],
+                        ]  
+                    ]
+                ],
+                [
+                    'label' => 'Sistema',
+                    'icon' => 'users',
+                    'submenu' => [
+                        [
+                            'label' => 'Usuários',
+                            'icon' => 'users',
+                            'url' => [
+                                'controller' => 'Users',
+                                'action' => 'index'
+                            ],
+                            'childs' => [
+                                [
+                                    'controller' => 'Users',
+                                    'action' => 'add'
+                                ],
+                                [
+                                    'controller' => 'Users',
+                                    'action' => 'edit'
+                                ],
+                            ]
+                        ]  
+                    ]
                 ]
             ]
         ];
 
-        $this->set(compact('items', 'name'));
+        $this->set(compact('items'));
     }
 }
