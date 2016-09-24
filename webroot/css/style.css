@@ -179,3 +179,6 @@ html, body {
 .sugar-panel-paginator > ul.pagination {
     margin-left: 15px;
 }
+.sugar-navbar-profile-picture{
+    width: 15px;
+}

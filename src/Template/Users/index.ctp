@@ -55,6 +55,8 @@
                     <th><?= $this->Paginator->sort('username') ?></th>
                     <th><?= $this->Paginator->sort('password') ?></th>
                     <th><?= $this->Paginator->sort('role_id') ?></th>
+                    <th><?= $this->Paginator->sort('profile_picture_dir') ?></th>
+                    <th><?= $this->Paginator->sort('profile_picture') ?></th>
                         <th style="width: 120px;">
                     </th>
                 </tr>
@@ -69,7 +71,9 @@
                         <td><?= h($user->modified) ?></td>
                         <td><?= h($user->username) ?></td>
                         <td><?= h($user->password) ?></td>
-                        <td><?= $user->has('role') ? $this->Html->link($user->role->name, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
+                        <td><?= $user->has('role') ? $this->Html->label($user->role->name, 'primary') : '' ?></td>
+                        <td><?= h($user->profile_picture_dir) ?></td>
+                        <td><?= h($user->profile_picture) ?></td>
                         <!-- Botões de Ação -->
                     <td class="text-right">
                         <!-- Botão Editar -->

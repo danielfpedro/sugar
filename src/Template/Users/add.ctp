@@ -25,6 +25,8 @@
             echo $this->Form->input('username');
             echo $this->Form->input('password');
             echo $this->Form->input('role_id', ['options' => $roles]);
+            echo $this->Form->input('profile_picture_dir');
+            echo $this->Form->input('profile_picture');
         ?>
         </div>
     </div>

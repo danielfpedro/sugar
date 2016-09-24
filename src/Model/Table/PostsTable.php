@@ -37,7 +37,10 @@ class PostsTable extends Table
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
+
     }
+
+
 
     /**
      * Default validation rules.
@@ -55,7 +58,7 @@ class PostsTable extends Table
             ->requirePresence('title', 'create')
             ->notEmpty('title');
 
-        
+
         return $validator;
     }
 

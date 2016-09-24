@@ -103,7 +103,7 @@ if (isset($modelObject))
                         if ($field === $details['foreignKey']) {
                             $isKey = true;
     %>
-                    <td><?= $<%= $singularVar %>->has('<%= $details['property'] %>') ? $this->Html->link($<%= $singularVar %>-><%= $details['property'] %>-><%= $details['displayField'] %>, ['controller' => '<%= $details['controller'] %>', 'action' => 'view', $<%= $singularVar %>-><%= $details['property'] %>-><%= $details['primaryKey'][0] %>]) : '' ?></td>
+                    <td><?= $<%= $singularVar %>->has('<%= $details['property'] %>') ? $this->Html->label($<%= $singularVar %>-><%= $details['property'] %>-><%= $details['displayField'] %>, 'primary') : '' ?></td>
     <%
                             break;
                         }

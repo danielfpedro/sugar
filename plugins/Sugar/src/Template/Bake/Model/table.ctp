@@ -96,7 +96,52 @@ class <%= $name %>Table extends Table
         $this-><%= $type %>('<%= $alias %>', [<%= $this->Bake->stringifyList($assoc, ['indent' => 3]) %>]);
 <% endforeach %>
 <% endforeach %>
+
+<% if ($name == 'Users' || $name == 'Usuarios'): %>
+        $this->addBehavior('Proffer.Proffer', [
+            'profile_picture' => [
+                'root' => WWW_ROOT . 'files',
+                'dir' => 'profile_picture_dir',
+                'thumbnailSizes' => [
+                    'square' => [
+                        'w' => 160,
+                        'h' => 160,
+                        'fit' => true,
+                        'jpeg_quality'  => 100
+                    ],
+                ]
+            ]
+        ]);
+<% endif %>
     }
+
+<% if ($name == 'Users' || $name == 'Usuarios'): %>
+    public function findAuth(Query $query, array $options)
+    {
+<%
+    if ($name == 'Users' || $name == 'Usuarios') {
+        $userFields = "['id', 'username', 'name', 'password', 'profile_picture_dir', 'profile_picture', 'role_id']";
+        $roleFields = "['id', 'name']";
+        $roleTableName = 'Roles';
+    } else {
+        $userFields = "['id', 'username', 'nome', 'senha', 'foto_perfil_dir', 'foto_perfil', 'funcao_id']";
+        $roleFields = "['id', 'nome']";
+        $roleTableName = 'Funcoes';
+    }
+%>
+        $query
+            ->select(<%= $userFields %>)
+            ->contain([
+                '<%= $roleTableName %>' => function ($q) {
+                    return $q
+                        ->select(<%= $roleFields %>);
+                }
+            ]);
+
+        return $query;
+    }
+<% endif %>
+
 <% if (!empty($validation)): %>
 
     /**
@@ -161,19 +206,20 @@ foreach ($validation as $field => $rules):
     endif;
 endforeach;
 %>
-        <% if ($name == 'Users' || $name == 'Usuarios'): %>
-            $validator
-                ->allowEmpty('new_password')
-                ->add('new_password', 'confirmaSenha', [
-                    'rule' => function ($value, $context) {
-                        if ($value) {
-                            return ($value == $context['data']['confirm_new_password']);
-                        }
-                        return true;
-                    },
-                    'message' => 'Você não confirmou a sua nova senha corretamente.'
-                ]);
-        <% endIf %>
+<% if ($name == 'Users' || $name == 'Usuarios'): %>
+
+        $validator
+            ->allowEmpty('new_password')
+            ->add('new_password', 'confirmaSenha', [
+                'rule' => function ($value, $context) {
+                    if ($value) {
+                        return ($value == $context['data']['confirm_new_password']);
+                    }
+                    return true;
+                },
+                'message' => 'Você não confirmou a sua nova senha corretamente.'
+            ]);
+<% endif; %>
 
         return $validator;
     }
@@ -197,7 +243,7 @@ endforeach;
 
             return $validator;
         }
-    <% endIf %>
+    <% endif %>
     
 
 <% endif %>

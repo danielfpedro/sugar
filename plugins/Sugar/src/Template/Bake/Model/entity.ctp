@@ -71,11 +71,29 @@ class <%= $name %> extends Entity
 
 <% endif %>
 
+<% if ($name == 'User' || $name == 'Usuario'): %>
+    protected $_virtual = ['profile_picture_path'];
+<% endif %>
+
+<% if ($name == 'User' || $name == 'Usuario'): %>
     protected function _setPassword($password)
     {
         if (strlen($password) > 0) {
           return (new DefaultPasswordHasher)->hash($password);
         }
     }
+
+    protected function _getProfilePicturePath()
+    {
+        /**
+         * No `profile_picture` eu uso ::getOriginal() pois se o form for submitado com um
+         * foto carregado e falhar o `profile_picture` vai receber o array do file e daria erro aqui.
+         */
+        if ($this->_properties['profile_picture_dir'] && $this->getOriginal('profile_picture')) {
+            return '../files/users/profile_picture/' . $this->_properties['profile_picture_dir'] . '/square_' . $this->getOriginal('profile_picture'); 
+        }
+        return 'default-profile_picture.png';
+    }
+<% endif; %>
 
 }

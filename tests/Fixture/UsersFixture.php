@@ -24,6 +24,8 @@ class UsersFixture extends TestFixture
         'username' => ['type' => 'string', 'length' => 45, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'password' => ['type' => 'string', 'length' => 120, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'role_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'profile_picture_dir' => ['type' => 'string', 'length' => 120, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'profile_picture' => ['type' => 'string', 'length' => 120, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_indexes' => [
             'fk_users_roles_idx' => ['type' => 'index', 'columns' => ['role_id'], 'length' => []],
         ],
@@ -47,11 +49,13 @@ class UsersFixture extends TestFixture
         [
             'id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
-            'created' => '2016-09-23 05:22:52',
-            'modified' => '2016-09-23 05:22:52',
+            'created' => '2016-09-24 06:21:48',
+            'modified' => '2016-09-24 06:21:48',
             'username' => 'Lorem ipsum dolor sit amet',
             'password' => 'Lorem ipsum dolor sit amet',
-            'role_id' => 1
+            'role_id' => 1,
+            'profile_picture_dir' => 'Lorem ipsum dolor sit amet',
+            'profile_picture' => 'Lorem ipsum dolor sit amet'
         ],
     ];
 }

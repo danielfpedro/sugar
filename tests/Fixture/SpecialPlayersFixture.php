@@ -43,11 +43,11 @@ class SpecialPlayersFixture extends TestFixture
         [
             'id' => 1,
             'nome' => 'Lorem ipsum dolor sit amet',
-            'criado' => '2016-09-23 05:22:52',
-            'modificado' => '2016-09-23 05:22:52',
+            'criado' => '2016-09-24 01:01:15',
+            'modificado' => '2016-09-24 01:01:15',
             'ativo' => 1,
             'deletado' => 1,
-            'dt_deletado' => '2016-09-23 05:22:52'
+            'dt_deletado' => '2016-09-24 01:01:15'
         ],
     ];
 }

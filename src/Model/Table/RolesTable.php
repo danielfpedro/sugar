@@ -43,7 +43,10 @@ class RolesTable extends Table
         $this->hasMany('Users', [
             'foreignKey' => 'role_id'
         ]);
+
     }
+
+
 
     /**
      * Default validation rules.
@@ -61,7 +64,7 @@ class RolesTable extends Table
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
-        
+
         return $validator;
     }
 

@@ -38,6 +38,16 @@ $compact = ["'" . $singularName . "'"];
                 'validate' => 'CheckCurrentPassword',
             ]);
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
+                /**
+                 * Atualizo os dados da sessão que eu uso para mostrar algo como nome e imagem de perfil
+                 */
+                $this->Auth->session->write($this->Auth->sessionKey . '.name', $user->name);
+                /**
+                 * Pego o user de novo para pegar os dados novos da imagem
+                 */
+                $user = $this->Users->get($user->id);
+                $this->Auth->session->write($this->Auth->sessionKey . '.profile_picture_path', $user->profile_picture_path);
+                
                 $this->Flash->success(__('As alterações foram salvas com sucesso.'));
 
                 return $this->redirect(['action' => 'accountSettings']);

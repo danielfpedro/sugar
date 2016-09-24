@@ -45,12 +45,27 @@ class UsersTable extends Table
             'foreignKey' => 'role_id',
             'joinType' => 'INNER'
         ]);
+
+        $this->addBehavior('Proffer.Proffer', [
+            'profile_picture' => [
+                'root' => WWW_ROOT . 'files',
+                'dir' => 'profile_picture_dir',
+                'thumbnailSizes' => [
+                    'square' => [
+                        'w' => 160,
+                        'h' => 160,
+                        'fit' => true,
+                        'jpeg_quality'  => 100
+                    ],
+                ]
+            ]
+        ]);
     }
 
-    public function findAuth(\Cake\ORM\Query $query, array $options)
+    public function findAuth(Query $query, array $options)
     {
         $query
-            ->select(['id', 'name', 'password', 'role_id'])
+            ->select(['id', 'username', 'name', 'password', 'profile_picture_dir', 'profile_picture', 'role_id'])
             ->contain([
                 'Roles' => function ($q) {
                     return $q
@@ -60,6 +75,7 @@ class UsersTable extends Table
 
         return $query;
     }
+
 
     /**
      * Default validation rules.
@@ -85,18 +101,25 @@ class UsersTable extends Table
             ->requirePresence('password', 'create')
             ->notEmpty('password');
 
-                    $validator
-                ->allowEmpty('new_password')
-                ->add('new_password', 'confirmaSenha', [
-                    'rule' => function ($value, $context) {
-                        if ($value) {
-                            return ($value == $context['data']['confirm_new_password']);
-                        }
-                        return true;
-                    },
-                    'message' => 'Você não confirmou a sua nova senha corretamente.'
-                ]);
-        
+        $validator
+            ->allowEmpty('profile_picture_dir');
+
+        $validator
+            ->allowEmpty('profile_picture');
+
+
+        $validator
+            ->allowEmpty('new_password')
+            ->add('new_password', 'confirmaSenha', [
+                'rule' => function ($value, $context) {
+                    if ($value) {
+                        return ($value == $context['data']['confirm_new_password']);
+                    }
+                    return true;
+                },
+                'message' => 'Você não confirmou a sua nova senha corretamente.'
+            ]);
+
         return $validator;
     }
 

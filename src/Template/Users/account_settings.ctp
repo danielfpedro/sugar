@@ -10,6 +10,7 @@
 <?= $this->Form->create($user, [
     'horizontal' => true,
     'novalidate' => true,
+    'type' => 'file',
     'columns' => [
         'label' => 2,
         'input' => 4,
@@ -19,7 +20,13 @@
 
     <div class="panel panel-default sugar-panel-content sugar-panel-form">
         <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-2 sugar-account-settings-profile-picture-container">
+                    <?= $this->Html->image($user->profile_picture_path) ?>
+                </div>
+            </div>
             <?php
+                echo $this->Form->input('profile_picture', ['type' => 'file']);
                 echo $this->Form->input('name');
                 echo $this->Form->input('username');
             ?>
