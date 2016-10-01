@@ -35,6 +35,8 @@ if (isset($modelObject) && $modelObject->behaviors()->has('Tree')) {
     ?>
 </div>
 
+<?= $this->Flash->render() ?>
+
 <?= $this->Form->create($<%= $singularVar %>, [
     'horizontal' => true,
     'novalidate' => true,

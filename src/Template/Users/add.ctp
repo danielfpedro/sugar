@@ -8,6 +8,8 @@
     ?>
 </div>
 
+<?= $this->Flash->render() ?>
+
 <?= $this->Form->create($user, [
     'horizontal' => true,
     'novalidate' => true,

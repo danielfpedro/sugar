@@ -89,4 +89,34 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
+
+    /**
+     * Test profileSettings method
+     *
+     * @return void
+     */
+    public function testProfileSettings()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test passwordSettings method
+     *
+     * @return void
+     */
+    public function testPasswordSettings()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test profileImageSettings method
+     *
+     * @return void
+     */
+    public function testProfileImageSettings()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
 }

@@ -40,6 +40,7 @@
 			<?= $this->cell('sidebar') ?>	
 		</aside>
 		<main class="sugar-content">
+			
 			<?= $this->fetch('content') ?>
 		</main>
 	</div>
@@ -55,7 +56,6 @@
 
 	<script>
 		$(function(){
-			
 			$(".sugar-sidebar").optiscroll();
 
 			$('.has-submenu > a').click(function(){

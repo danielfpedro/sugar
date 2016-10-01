@@ -29,24 +29,14 @@ $compact = ["'" . $singularName . "'"];
     {
         $id = $this->Auth->user('id');
         
-        $<%= $singularName %> = $this-><%= $currentModelName %>->get($id, [
-            'contain' => [<%= $this->Bake->stringifyList($belongsToMany, ['indent' => false]) %>]
-        ]);
+        $<%= $singularName %> = $this-><%= $currentModelName %>->get($id);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data, [
                 'validate' => 'CheckCurrentPassword',
             ]);
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
-                /**
-                 * Atualizo os dados da sessão que eu uso para mostrar algo como nome e imagem de perfil
-                 */
-                $this->Auth->session->write($this->Auth->sessionKey . '.name', $user->name);
-                /**
-                 * Pego o user de novo para pegar os dados novos da imagem
-                 */
-                $user = $this->Users->get($user->id);
-                $this->Auth->session->write($this->Auth->sessionKey . '.profile_picture_path', $user->profile_picture_path);
                 
                 $this->Flash->success(__('As alterações foram salvas com sucesso.'));
 
@@ -55,17 +45,7 @@ $compact = ["'" . $singularName . "'"];
                 $this->Flash->error(__('As alterações não foram salvas. Por favor, tente novamente.'));
             }
         }
-<%
-        foreach (array_merge($belongsTo, $belongsToMany) as $assoc):
-            $association = $modelObj->association($assoc);
-            $otherName = $association->target()->alias();
-            $otherPlural = $this->_variableName($otherName);
-%>
-        $<%= $otherPlural %> = $this-><%= $currentModelName %>-><%= $otherName %>->find('list', ['limit' => 200]);
-<%
-            $compact[] = "'$otherPlural'";
-        endforeach;
-%>
+
         $this->set(compact(<%= join(', ', $compact) %>));
         $this->set('_serialize', ['<%=$singularName%>']);
     }

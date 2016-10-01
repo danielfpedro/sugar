@@ -182,3 +182,11 @@ html, body {
 .sugar-navbar-profile-picture{
     width: 15px;
 }
+
+.sugar-notify {
+/*    position: fixed;
+    z-index: 10;
+    left: 0;
+    bottom: 0;*/
+    border-radius: 0!important;
+}

@@ -39,6 +39,9 @@ EventManager::instance()->on('Bake.beforeRender.Controller.controller', function
             $view->viewVars['actions'][] = 'login';
             $view->viewVars['actions'][] = 'logout';
             $view->viewVars['actions'][] = 'accountSettings';
+            $view->viewVars['actions'][] = 'profileSettings';
+            $view->viewVars['actions'][] = 'passwordSettings';
+            $view->viewVars['actions'][] = 'profileImageSettings';
         }
     }
 );

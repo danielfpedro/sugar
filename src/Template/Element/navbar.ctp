@@ -33,10 +33,10 @@
                     <ul class="dropdown-menu">
                         <li>
                             <?= $this->Html->link(
-                                $this->Html->faIcon('cog fa-fw') . ' Configurações de Conta',
+                                $this->Html->faIcon('cog fa-fw') . ' Configurações',
                                 [
                                     'controller' => 'Users',
-                                    'action' => 'accountSettings'
+                                    'action' => 'profileSettings'
                                 ],
                                 ['escape' => false]
                             ) ?>

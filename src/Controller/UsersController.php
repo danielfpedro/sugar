@@ -145,24 +145,14 @@ class UsersController extends AppController
     {
         $id = $this->Auth->user('id');
         
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
+        $user = $this->Users->get($id);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $user = $this->Users->patchEntity($user, $this->request->data, [
                 'validate' => 'CheckCurrentPassword',
             ]);
             if ($this->Users->save($user)) {
-                /**
-                 * Atualizo os dados da sessão que eu uso para mostrar algo como nome e imagem de perfil
-                 */
-                $this->Auth->session->write($this->Auth->sessionKey . '.name', $user->name);
-                /**
-                 * Pego o user de novo para pegar os dados novos da imagem
-                 */
-                $user = $this->Users->get($user->id);
-                $this->Auth->session->write($this->Auth->sessionKey . '.profile_picture_path', $user->profile_picture_path);
                 
                 $this->Flash->success(__('As alterações foram salvas com sucesso.'));
 
@@ -171,8 +161,108 @@ class UsersController extends AppController
                 $this->Flash->error(__('As alterações não foram salvas. Por favor, tente novamente.'));
             }
         }
+
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
+    }
+
+    /**
+     * ProfileSettings method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function profileSettings()
+    {
+        $id = $this->Auth->user('id');
+        
+        $user = $this->Users->get($id);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                /**
+                 * Atualizo os dados da sessão que eu uso para mostrar algo como nome e imagem de perfil
+                 */
+                $this->Auth->session->write($this->Auth->sessionKey . '.name', $user->name);
+                
+                $this->Flash->success(__('As alterações foram salvas com sucesso.'));
+
+                return $this->redirect(['action' => 'profileSettings']);
+            } else {
+                $this->Flash->error(__('As alterações não foram salvas. Por favor, tente novamente.'));
+            }
+        }
+
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
+    }
+
+    /**
+     * ProfileSettings method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function passwordSettings()
+    {
+        $id = $this->Auth->user('id');
+        
+        $user = $this->Users->get($id);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $user = $this->Users->patchEntity($user, $this->request->data, [
+                'validate' => 'CheckCurrentPassword',
+            ]);
+
+            if ($this->Users->save($user)) {
+                
+                $this->Flash->success(__('As alterações foram salvas com sucesso.'));
+
+                return $this->redirect(['action' => 'passwordSettings']);
+            } else {
+                $this->Flash->error(__('As alterações não foram salvas. Por favor, tente novamente.'));
+            }
+        }
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
         $this->set(compact('user', 'roles'));
+        $this->set('_serialize', ['user']);
+    }
+
+    /**
+     * ProfileSettings method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function profileImageSettings()
+    {
+        $id = $this->Auth->user('id');
+        
+        $user = $this->Users->get($id);
+        
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                /**
+                 * Pego o user de novo para pegar os dados novos da imagem
+                 */
+                $user = $this->Users->get($user->id);
+                $this->Auth->session->write($this->Auth->sessionKey . '.profile_picture_path', $user->profile_picture_path);
+                
+                $this->Flash->success(__('As alterações foram salvas com sucesso.'));
+
+                return $this->redirect(['action' => 'profileImageSettings']);
+            } else {
+                $this->Flash->error(__('As alterações não foram salvas. Por favor, tente novamente.'));
+            }
+        }
+
+        $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
 }

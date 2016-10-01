@@ -17,6 +17,8 @@
     </div>
 </div>
 
+<?= $this->Flash->render() ?>
+
 <!-- Painel de Busca -->
 <div class="panel panel-default sugar-panel-content">
     <div class="panel-body">
