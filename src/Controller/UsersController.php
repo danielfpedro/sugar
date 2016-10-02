@@ -3,6 +3,11 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 
+use Cake\Utility\Security;
+use Cake\Event\Event;
+use Cake\I18n\Time;
+use Firebase\JWT\JWT;
+
 /**
  * Users Controller
  *
@@ -10,6 +15,11 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
+
+    public function beforeFilter(Event $event)
+    {
+        $this->Auth->allow(['forgotPassword', 'resetPassword']);
+    }
 
     /**
      * Index method
@@ -120,7 +130,7 @@ class UsersController extends AppController
 
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error(__('A combinação Email/Senha informada é inválida.'));
+            $this->Flash->error(__('A combinação Email/Senha informada é inválida.'), ['key' => 'auth']);
         }
     }
 
@@ -260,6 +270,106 @@ class UsersController extends AppController
             } else {
                 $this->Flash->error(__('As alterações não foram salvas. Por favor, tente novamente.'));
             }
+        }
+
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
+    }
+    public function forgotPassword()
+    {
+        $this->viewBuilder()->layout('login');
+
+        if ($this->request->is('post')) {
+            if (!$this->request->data('email')) {
+                $this->Flash->error('Você não informou nenhum email.');
+                return $this->redirect(['action' => 'forgotPassword']);
+            }
+            $user = $this->Users->find('all', [
+                'conditions' => [
+                    'Users.username' => $this->request->data('email')
+                ]
+            ])
+            ->first();
+
+            if (!$user) {
+                $this->Flash->error('Desculpe, o email <strong>'.$this->request->data('email').'</strong> informado não é de nenhum usuário válido.', ['escape' => false]);
+                return $this->redirect(['action' => 'forgotPassword']);
+            }
+
+            $tokenData = [
+                'email' => $user->username,
+                'stamp' => Time::now()
+            ];
+            $user->forgot_password_token = JWT::encode($tokenData, Security::salt());
+            $expDate = Time::now();
+            $user->forgot_password_exp_date = $expDate->modify('+1 day');
+
+            if (!$this->Users->save($user)) {
+                $this->Flash->error('Ocorreu um erro ao tentar executar a sua requisição. Por favor, tente novamente.');
+            }
+            $this->Flash->success('As informações para recuperar a sua senha foram enviadas para o email '.$this->request->data('email').'.');
+            return $this->redirect(['action' => 'forgotPassword']);
+        }
+    }
+    public function resetPassword($token = null)
+    {
+        $this->viewBuilder()->layout('login');
+
+        $user = $this->Users->newEntity();
+        /**
+         * Quando da algum erro(token inexistente, inválido, expirado etc...) eu redireciono com a flag invalid, então não faço nada se houver a flag.
+         */
+        if (!$this->request->query('invalid') && !$this->request->query('exp')) {
+            try {
+                $data = JWT::decode($token, Security::salt(), ['HS256']);   
+                debug($data);
+            } catch (\Exception $e) {
+                return $this->redirect(['action' => 'resetPassword', '?' => ['invalid' => true], $token]);
+            }
+            if (!isset($data->email)) {
+                return $this->redirect(['action' => 'resetPassword', '?' => ['invalid' => true], $token]);
+            }
+            $user = $this->Users->find('all', [
+                'conditions' => [
+                    'Users.username' => $data->email
+                ]
+            ])
+            ->first();
+            /**
+             * Verifico se o token é o mesmo
+             */
+            if ($user->forgot_password_token != $token) {
+                return $this->redirect(['action' => 'resetPassword', '?' => ['invalid' => true], $token]);
+            }
+            /**
+             * Verifico se já expirou
+             */
+            if ($user->forgot_password_exp_date <= Time::now()) {
+                return $this->redirect(['action' => 'resetPassword', '?' => ['exp' => true], $token]);
+            }
+
+            if ($this->request->is(['patch', 'post', 'put'])) {
+
+                $user = $this->Users->patchEntity($user, [
+                    'new_password' => $this->request->data('new_password'),
+                    'confirm_new_password' => $this->request->data('confirm_new_password'),
+                    'password' => $this->request->data('new_password'),
+                    'forgot_password_token' => null,
+                    'forgot_password_exp_date' => null,
+                ]);
+
+                if (!$this->Users->save($user)) {
+                    $this->Flash->error('Ocorreu um erro ao tentar salvar a sua senha. Por favor tente novamente.');
+                } else {
+                    $this->Flash->success('A sua senha foi redefinia e agora você já pode logar com ela.');
+                    return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+                }
+            }
+        } else {
+            if ($this->request->query('exp')) {
+                $this->Flash->error('Para a sua segurança quando você requisita a redefinição de senha você 24 horas para concluir o processo e este prazo expirou, favor requisitar novamente.');
+            }
+            $this->Flash->error('URL inválida.');
         }
 
         $this->set(compact('user'));

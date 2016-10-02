@@ -12,7 +12,8 @@
         "cakephp/plugin-installer": "*",
         "holt59/cakephp3-bootstrap-helpers": "dev-master",
         "davidyell/proffer": "^0.7.0",
-        "josbeir/image": "^1.09"
+        "josbeir/image": "^1.09",
+        "firebase/php-jwt": "^4.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",

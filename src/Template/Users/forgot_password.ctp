@@ -3,14 +3,12 @@
 
 	<div class="panel panel-login">
 		<div class="panel-body">
-			<?= $this->Flash->render('auth') ?>
+			<h3>Recupere a sua senha</h3>
 			<?= $this->Flash->render() ?>
 		    <?= $this->Form->create() ?>
-		        <?= $this->Form->input('username') ?>
-		        <?= $this->Form->input('password') ?>
-		        <?= $this->Html->link('Esqueceu a senha?', ['controller' => 'Users', 'action' => 'forgotPassword']) ?>
+		        <?= $this->Form->input('email') ?>
 		        <button type="submit" class="btn btn-primary btn-block">
-		        	Entrar
+		        	Recuperar senha
 		        </button>
 		    <?= $this->Form->end() ?>
 	    </div>
