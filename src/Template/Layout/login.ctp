@@ -33,7 +33,15 @@
 </head>
 <body style="background-image: url(img/background-login.jpg); background-size: cover;">
 	
-	<?= $this->fetch('content') ?>
+<div class="sugar-container-login">
+	<div class="sugar-login-overlay"></div>
+
+	<div class="panel panel-login">
+		<div class="panel-body">
+			<?= $this->fetch('content') ?>
+	    </div>
+    </div>
+</div>
 
 </body>
 

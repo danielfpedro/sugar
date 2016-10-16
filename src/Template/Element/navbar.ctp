@@ -28,7 +28,7 @@
                         href="#"
                         class="dropdown-toggle"
                         data-toggle="dropdown">
-                        <?= $this->Html->image($loggedinUser['profile_picture_path'], ['class' => 'img-circle sugar-navbar-profile-picture']) ?><?= $this->Sugar->shortName($loggedinUser['name']) ?> <span class="caret"></span>
+                        <?php // $this->Html->image($loggedinUser['profile_picture_path'], ['class' => 'img-circle sugar-navbar-profile-picture']) ?><?= $this->Sugar->shortName($loggedinUser['first_name']) ?> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li>

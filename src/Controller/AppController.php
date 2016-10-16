@@ -59,27 +59,29 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
+        $this->loadComponent('CakeDC/Users.UsersAuth');
         $this->loadComponent('Flash');
+        
         // Auth
-        $this->loadComponent('Auth', [
-            'authorize' => [
-                'Sugar'
-            ],
-            'authenticate' => [
-                'Form' => [
-                    'finder' => 'Auth'
-                ]
-            ],
-            'loginRedirect' => [
-                'controller' => 'Posts',
-                'action' => 'index'
-            ],
-            'logoutRedirect' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
-            'authError' => 'Você não pode acessar esta área.',
-        ]);
+        // $this->loadComponent('Auth', [
+        //     'authorize' => [
+        //         'Sugar'
+        //     ],
+        //     'authenticate' => [
+        //         'Form' => [
+        //             'finder' => 'Auth'
+        //         ]
+        //     ],
+        //     'loginRedirect' => [
+        //         'controller' => 'Posts',
+        //         'action' => 'index'
+        //     ],
+        //     'logoutRedirect' => [
+        //         'controller' => 'Users',
+        //         'action' => 'login'
+        //     ],
+        //     'authError' => 'Você não pode acessar esta área.',
+        // ]);
 
         $this->viewBuilder()->layout('sugar');
     }
@@ -92,6 +94,11 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
+
+        if ($this->request->params['plugin'] == 'CakeDC/Users' && $this->request->params['controller'] == 'Users' && in_array($this->request->params['action'], ['login', 'requestResetPassword', 'register'])) {
+            $this->viewbuilder()->layout('login');
+        }
+
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
