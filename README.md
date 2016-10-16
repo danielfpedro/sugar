@@ -38,11 +38,40 @@ Então:
 - [Proffer](https://github.com/davidyell/CakePHP3-Proffer): Usado para gerenciar upload e manipulação  de imagens.
 - [Users](https://github.com/CakeDC/users): Usado para gerenciar a parte de usuários como (Autenticação, Remember me, Esqueci minha senha...)
 
-### Habilitando os plugins
+## Habilitando os plugins
+Carregando no `bootstrap`.
 ```php
-//Em config/bootstrap.php
-Plugin::loadAll();
+<?php
+//config/bootstrap.php
+...
+/**
+ * Helpers Bootstrap
+ */
+Plugin::load('Bootstrap');
+/**
+ * Sugar
+ */
+Plugin::load('Sugar');
+/**
+ * CakeDC/Users
+ */
+Configure::write('Users.config', ['users']);
+Plugin::load('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);
 ```
+
+## Configurando plugin CakeDC/Users
+Carregando no `AppController`
+
+```php
+<?php
+//src/Controller/AppController.php
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('CakeDC/Users.UsersAuth');
+```
+
 
 ## Tags Semânticas
 

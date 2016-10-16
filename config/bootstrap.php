@@ -206,9 +206,18 @@ Type::build('datetime')
  * Plugin::load('Migrations'); //Loads a single plugin named Migrations
  *
  */
-Plugin::loadAll(); // Loads all plugins at once
+// Plugin::loadAll(); // Loads all plugins at once
+/**
+ * Helpers Bootstrap
+ */
 Plugin::load('Bootstrap');
+/**
+ * Sugar
+ */
 Plugin::load('Sugar');
+/**
+ * CakeDC/Users
+ */
 Configure::write('Users.config', ['users']);
 Plugin::load('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);
 
