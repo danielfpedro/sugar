@@ -30,9 +30,19 @@ O `Cakephp` já utiliza o `composer` por padrão então precisamos somente adici
 "cakedc/users": "^3.2"
 ```
 
+Então:
+
+`composer update`
+
 - [Cakephp 3 bootstrap Helpers](https://github.com/Holt59/cakephp3-bootstrap-helpers): Helpers de Cakephp 3
 - [Proffer](https://github.com/davidyell/CakePHP3-Proffer): Usado para gerenciar upload e manipulação  de imagens.
 - [Users](https://github.com/CakeDC/users): Usado para gerenciar a parte de usuários como (Autenticação, Remember me, Esqueci minha senha...)
+
+### Habilitando os plugins
+```php
+//Em config/bootstrap.php
+Plugin::loadAll();
+```
 
 ## Tags Semânticas
 
