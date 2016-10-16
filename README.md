@@ -1,12 +1,12 @@
 # Sugar
 
-### Instalação
+## Instalação
 `composer create-project --prefer-dist cakephp/app my_app_name`
 
 ### Configurar conexão com o Banco de Dados
 Informar as configurações do Banco de Dados em `config/app.php`
 
-### Bower
+## Bower
 Usamos o `Bower` para gerências todas as nossas dependências `front-end`.
 
 Copie [bower.json](http://) e [.bowerrc](http://) para a raiz do app.
@@ -19,8 +19,19 @@ Vá para a raiz do seu aplicativo e:
 
 `bower install`
 
-### Composer
-Usamos o `Bower` para gerências todas as nossas dependências `front-end`.
+## Composer
+Usamos o `Composer` para gerências todas as nossas dependências `backend`.
+
+O `Cakephp` já utiliza o `composer` por padrão então precisamos somente adicionar as bibliotecas extras do `Sugar`que são:
+
+```javascript
+"holt59/cakephp3-bootstrap-helpers": "dev-master",
+"davidyell/proffer": "^0.7.0",
+"josbeir/image": "^1.09",
+"cakedc/users": "^3.2"
+```
+
+
 
 ## Tags Semânticas
 
