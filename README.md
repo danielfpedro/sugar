@@ -1,7 +1,9 @@
 # Sugar
 
 ## Instalação
-`composer create-project --prefer-dist cakephp/app my_app_name`
+```bash
+composer create-project --prefer-dist cakephp/app my_app_name
+```
 
 ### Configurar conexão com o Banco de Dados
 Informar as configurações do Banco de Dados em `config/app.php`
@@ -17,7 +19,9 @@ Copie [bower.json](http://) e [.bowerrc](http://) para a raiz do app.
 
 Vá para a raiz do seu aplicativo e:
 
-`bower install`
+```bash
+bower install
+```
 
 ## Composer
 Usamos o `Composer` para gerências todas as nossas dependências `backend`.
@@ -32,7 +36,9 @@ O `Cakephp` já utiliza o `composer` por padrão então precisamos somente adici
 
 Então:
 
-`composer update`
+```bash
+composer update
+```
 
 - [Cakephp 3 bootstrap Helpers](https://github.com/Holt59/cakephp3-bootstrap-helpers): Helpers de Cakephp 3
 - [Proffer](https://github.com/davidyell/CakePHP3-Proffer): Usado para gerenciar upload e manipulação  de imagens.
