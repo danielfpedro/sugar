@@ -39,10 +39,9 @@ Então:
 - [Users](https://github.com/CakeDC/users): Usado para gerenciar a parte de usuários como (Autenticação, Remember me, Esqueci minha senha...)
 
 ## Habilitando os plugins
-Carregando no `bootstrap`.
 ```php
 <?php
-//config/bootstrap.php
+// config/bootstrap.php
 ...
 /**
  * Helpers Bootstrap
@@ -64,12 +63,13 @@ Carregando no `AppController`
 
 ```php
 <?php
-//src/Controller/AppController.php
-    public function initialize()
-    {
-        parent::initialize();
+// src/Controller/AppController.php
+public function initialize()
+{
+  parent::initialize();
 
-        $this->loadComponent('CakeDC/Users.UsersAuth');
+  $this->loadComponent('CakeDC/Users.UsersAuth');
+}
 ```
 
 
