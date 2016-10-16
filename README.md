@@ -27,12 +27,13 @@ O `Cakephp` já utiliza o `composer` por padrão então precisamos somente adici
 ```javascript
 "holt59/cakephp3-bootstrap-helpers": "dev-master",
 "davidyell/proffer": "^0.7.0",
-"josbeir/image": "^1.09",
 "cakedc/users": "^3.2"
 ```
 
-
+- [Cakephp 3 bootstrap Helpers](https://github.com/Holt59/cakephp3-bootstrap-helpers): Helpers de Cakephp 3
+- [Proffer](https://github.com/davidyell/CakePHP3-Proffer): Usado para gerenciar upload e manipulação  de imagens.
+- [Users](https://github.com/CakeDC/users): Usado para gerenciar a parte de usuários como (Autenticação, Remember me, Esqueci minha senha...)
 
 ## Tags Semânticas
 
-Diferente de tags genericas como `<div>` o HTML5 tem algumas tags semânticas, **Sugar** faz uso delas eu seu Layout;
+Diferente de tags genéricas como `<div>` o HTML5 tem algumas tags semânticas, **Sugar** faz uso delas eu seu Layout;
