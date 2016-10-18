@@ -96,7 +96,7 @@ class AppController extends Controller
     {
 
         if ($this->request->params['plugin'] == 'CakeDC/Users' && $this->request->params['controller'] == 'Users' && in_array($this->request->params['action'], ['login', 'requestResetPassword', 'register'])) {
-            $this->viewbuilder()->layout('login');
+            $this->viewbuilder()->layout('notLoggedin');
         }
 
         if (!array_key_exists('_serialize', $this->viewVars) &&

@@ -44,6 +44,34 @@ composer update
 - [Proffer](https://github.com/davidyell/CakePHP3-Proffer): Usado para gerenciar upload e manipulação  de imagens.
 - [Users](https://github.com/CakeDC/users): Usado para gerenciar a parte de usuários como (Autenticação, Remember me, Esqueci minha senha...)
 
+## Layouts
+O `Sugar` utiliza dois layouts que são (notLoggedin.ctp](http://) para todas as partes partes antes do usuário se logar como login, esqueci minha senha etc. [sugar.ctp](http://) é usado para todo o resto do sistema.
+
+Copie os dois para `src/Template/Layout` e depois adicione ao seu `AppController`:
+
+```php
+// src/Controller/AppController.php
+    public function beforeRender(Event $event)
+    {
+        /**
+         * Usando layout `notLoggedin` para login, requestResetPassword e resetPassword.
+         *
+         * Caso contrario usar layout `sugar`.
+         */
+        if ($this->request->params['plugin'] == 'CakeDC/Users' && $this->request->params['controller'] == 'Users' && in_array($this->request->params['action'], ['login', 'requestResetPassword', 'resetPassword'])) {
+            $this->viewbuilder()->layout('notLoggedin');
+        } else {
+            $this->viewbuilder()->layout('sugar');
+        }
+
+        if (!array_key_exists('_serialize', $this->viewVars) &&
+            in_array($this->response->type(), ['application/json', 'application/xml'])
+        ) {
+            $this->set('_serialize', true);
+        }
+    }
+```
+
 ## Habilitando os plugins
 ```php
 <?php
@@ -79,6 +107,4 @@ public function initialize()
 ```
 
 
-## Tags Semânticas
-
-Diferente de tags genéricas como `<div>` o HTML5 tem algumas tags semânticas, **Sugar** faz uso delas eu seu Layout;
+Copie [users.php](http://) para a pasta `config`, este arquivo é responsável por todas as configurações do plugin que controla os `usuários`, altere-o conforme a sua necessidade.
