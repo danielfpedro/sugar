@@ -147,4 +147,4 @@ $config = [
 
 O `Auth` do **Cakephp 3** por padrão espera um campo chamado `username` e outro `password`, na configuração acima dizemos que o campo `username` na verdade será `email`. Esta configuração altera logicamente o `Auth` porém no template do login o campo do form ainda é `username`.
 
-O **Cakephp 3** possui uma maneira bem inteligente de sobrescrever um template de um plugin de dentro do seu próprio app, para fazer isso copie o template [login.ctp](http://) que contém o campo `email` em vez de `username` no form para o caminho `src/Template/PluginCakeDC/Users/login.ctp`.
+O **Cakephp 3** possui uma maneira bem inteligente de sobrescrever um template de um plugin de dentro do seu próprio app. Para fazer isso copie o template [login.ctp](http://) que contém o campo `email` em vez de `username` no form para o caminho `src/Template/Plugin/CakeDC/Users/login.ctp`.
