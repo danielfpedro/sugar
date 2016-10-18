@@ -82,8 +82,6 @@ class AppController extends Controller
         //     ],
         //     'authError' => 'Você não pode acessar esta área.',
         // ]);
-
-        $this->viewBuilder()->layout('sugar');
     }
 
     /**
@@ -95,8 +93,15 @@ class AppController extends Controller
     public function beforeRender(Event $event)
     {
 
-        if ($this->request->params['plugin'] == 'CakeDC/Users' && $this->request->params['controller'] == 'Users' && in_array($this->request->params['action'], ['login', 'requestResetPassword', 'register'])) {
+        /**
+         * Usando layout `notLoggedin` para login, requestResetPassword e resetPassword.
+         *
+         * Caso contrario usar layout `sugar`.
+         */
+        if ($this->request->params['plugin'] == 'CakeDC/Users' && $this->request->params['controller'] == 'Users' && in_array($this->request->params['action'], ['login', 'requestResetPassword', 'resetPassword'])) {
             $this->viewbuilder()->layout('notLoggedin');
+        } else {
+            $this->viewbuilder()->layout('sugar');
         }
 
         if (!array_key_exists('_serialize', $this->viewVars) &&
