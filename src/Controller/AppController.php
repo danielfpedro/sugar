@@ -29,6 +29,7 @@ class AppController extends Controller
 {
 
     public $helpers = [
+        'Sugar.Sugar',
         'Form' => [
             'className' => 'Bootstrap.BootstrapForm',
         ],
@@ -92,7 +93,6 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
-
         /**
          * Usando layout `notLoggedin` para login, requestResetPassword e resetPassword.
          *

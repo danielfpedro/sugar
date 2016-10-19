@@ -64,6 +64,44 @@ Plugin::load('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);
 - [Proffer](https://github.com/davidyell/CakePHP3-Proffer): Usado para gerenciar upload e manipulação  de imagens.
 - [Users](https://github.com/CakeDC/users): Usado para gerenciar a parte de usuários como (Autenticação, Remember me, Esqueci minha senha...)
 
+### Carregando os Components e Helpers dos plugins
+Os plugins podem conter diversos componentes então após carrega-los precisar dizer quais componentes vamos usar.
+No nosso caso iremos usar os helpers do **Bootstrap** e **Sugar** e o componente do **CakeDC/Users**.
+
+```php
+<?php
+// src/Controller/AppController.php
+...
+    public $helpers = [
+        'Sugar.Sugar',
+        'Form' => [
+            'className' => 'Bootstrap.BootstrapForm',
+        ],
+        'Html' => [
+            'className' => 'Bootstrap.BootstrapHtml'
+        ],
+        'Form' => [
+            'className' => 'Bootstrap.BootstrapForm'
+        ],
+        'Paginator' => [
+            'className' => 'Bootstrap.BootstrapPaginator'
+        ],
+        'Modal' => [
+          'className' => 'Bootstrap.BootstrapModal'
+        ]
+    ];
+
+    public function initialize()
+    {
+        parent::initialize();
+    
+        $this->loadComponent('CakeDC/Users.UsersAuth');
+        ...
+    }
+...
+```
+
+
 ## Layouts
 O `Sugar` utiliza dois layouts que são (notLoggedin.ctp](http://) para todas as partes partes antes do usuário se logar como login, esqueci minha senha etc. [sugar.ctp](http://) é usado para todo o resto do sistema.
 
@@ -98,24 +136,11 @@ Copie os dois para `src/Template/Layout` e depois adicione ao seu `AppController
 ```
 
 ## Configurando plugin CakeDC/Users
-Carregando no `AppController`
-
-```php
-<?php
-// src/Controller/AppController.php
-public function initialize()
-{
-  parent::initialize();
-
-  $this->loadComponent('CakeDC/Users.UsersAuth');
-}
-```
-
 
 Copie [users.php](http://) para a pasta `config`, este arquivo é responsável por todas as configurações do plugin que controla os `usuários`, altere-o conforme a sua necessidade.
 
 #### Alterando o template do login
-**CakeDC/Users** usa `username` para logar, eu gosto de usar o email como `username` e está configuração já foi feita no arquivo [user.php](http://) nesta parte:
+**CakeDC/Users** usa `username` para logar, eu gosto de usar o email como `username` e esta configuração já foi feita no arquivo [user.php](http://) nesta parte:
 
 ```php
 <?php
@@ -136,7 +161,7 @@ $config = [
             'CakeDC/Users.RememberMe',
             'Form' => [
                 'fields' => [
-                    **'username' => 'email'**
+                    'username' => 'email' // <-- Aqui
                 ]
             ],
         ],
@@ -148,3 +173,5 @@ $config = [
 O `Auth` do **Cakephp 3** por padrão espera um campo chamado `username` e outro `password`, na configuração acima dizemos que o campo `username` na verdade será `email`. Esta configuração altera logicamente o `Auth` porém no template do login o campo do form ainda é `username`.
 
 O **Cakephp 3** possui uma maneira bem inteligente de sobrescrever um template de um plugin de dentro do seu próprio app. Para fazer isso copie o template [login.ctp](http://) que contém o campo `email` em vez de `username` no form para o caminho `src/Template/Plugin/CakeDC/Users/login.ctp`.
+
+#### Esqueci

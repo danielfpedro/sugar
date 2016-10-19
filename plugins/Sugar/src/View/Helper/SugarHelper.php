@@ -1,15 +1,10 @@
 <?php
-namespace App\View\Helper;
+namespace Sugar\View\Helper;
 
 use Cake\View\Helper;
-use Cake\View\View;
 
-/**
- * Sugar helper
- */
 class SugarHelper extends Helper
 {
-
     /**
      * Default configuration.
      *
