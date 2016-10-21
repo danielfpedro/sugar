@@ -9,7 +9,7 @@ composer create-project --prefer-dist cakephp/app my_app_name
 Informar as configurações do Banco de Dados em `config/app.php`
 
 ## Bower
-Usamos o `Bower` para gerências todas as nossas dependências `front-end`.
+Usamos o `Bower` para gerenciar todas as nossas dependências `front-end`.
 
 Copie [bower.json](http://) e [.bowerrc](http://) para a raiz do app.
 
@@ -103,7 +103,7 @@ No nosso caso iremos usar os helpers do **Bootstrap** e **Sugar** e o componente
 
 
 ## Layouts
-O `Sugar` utiliza dois layouts que são (notLoggedin.ctp](http://) para todas as partes partes antes do usuário se logar como login, esqueci minha senha etc. [sugar.ctp](http://) é usado para todo o resto do sistema.
+O `Sugar` utiliza dois layouts que são [notLoggedin.ctp](http://) para todas as partes partes antes do usuário se logar como login, esqueci minha senha etc. [sugar.ctp](http://) é usado para todo o resto do sistema.
 
 Copie os dois para `src/Template/Layout` e depois adicione ao seu `AppController`:
 
@@ -174,4 +174,71 @@ O `Auth` do **Cakephp 3** por padrão espera um campo chamado `username` e outro
 
 O **Cakephp 3** possui uma maneira bem inteligente de sobrescrever um template de um plugin de dentro do seu próprio app. Para fazer isso copie o template [login.ctp](http://) que contém o campo `email` em vez de `username` no form para o caminho `src/Template/Plugin/CakeDC/Users/login.ctp`.
 
-#### Esqueci
+#### Menu Lateral
+Você deve criar um arquivo de configuração `config/sidebar_items.php` que deve retornar um array com a primeira **chave** chamda items.
+
+```php
+<?php
+
+return [
+    'items' => [
+        null => [
+            [
+                'label' => 'Posts',
+                'icon' => 'pencil-square-o',
+                'url' => [
+                    'controller' => 'Posts',
+                    'action' => 'index'
+                ]
+            ],
+        ],
+        'Sistema' => [
+            [
+                'label' => 'configurações',
+                'icon' => 'users',
+                'submenu' => [
+                    [
+                        'label' => 'Posts',
+                        'icon' => 'list',
+                        'url' => [
+                            'controller' => 'Posts',
+                            'action' => 'index'
+                        ],
+                    ]  
+                ]
+            ],
+            [
+                'label' => 'Sistema',
+                'icon' => 'users',
+                'submenu' => [
+                    [
+                        'label' => 'Usuários',
+                        'icon' => 'users',
+                        'url' => [
+                            'controller' => 'Users',
+                            'action' => 'index'
+                        ],
+                        'childs' => [
+                            [
+                                'controller' => 'Users',
+                                'action' => 'add'
+                            ],
+                            [
+                                'controller' => 'Users',
+                                'action' => 'edit'
+                            ],
+                        ]
+                    ]  
+                ]
+            ]
+        ]
+    ]
+];
+```
+
+**Colocar aqui um print de como ficou o menu com array apresentado**
+O menu é divido em vários menus então o nível após a chave `items` deverá conter o título dos menus. Caso não queira nenhum título informe `null`.
+
+- **childs**: Imagine que um item do menu abre a rota `controller' => 'Posts', 'action' => 'index'`, quando essa rota for acessado o item no menu ficará destacado. a opção `childs` serve para indicar todas as rotas que você também quer que destaque o item no menu.
+- **submenu**: Auto explicativo rsrs.
+
