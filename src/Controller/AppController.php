@@ -114,7 +114,8 @@ class AppController extends Controller
             'name' => 'Sugar'
         ];
 
-        $loggedinUser = $this->Auth->user();
+        // $loggedinUser = $this->Auth->user();
+        $loggedinUser = [];
 
         $this->set(compact('dashboardOptions', 'loggedinUser'));
     }

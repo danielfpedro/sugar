@@ -239,6 +239,6 @@ return [
 **Colocar aqui um print de como ficou o menu com array apresentado**
 O menu é divido em vários menus então o nível após a chave `items` deverá conter o título dos menus. Caso não queira nenhum título informe `null`.
 
-- **childs**: Imagine que um item do menu abre a rota `controller' => 'Posts', 'action' => 'index'`, quando essa rota for acessado o item no menu ficará destacado. a opção `childs` serve para indicar todas as rotas que você também quer que destaque o item no menu.
+- **childs**: Imagine que um item do menu abre a rota `controller' => 'Posts', 'action' => 'index'`, quando essa rota for acessado o item no menu ficará destacado. a opção `childs` serve para indicar todas as rotas que você também quer que destaque o item no menu. Também é possível usar `|` como `ou ` na action, por exemplo, `'action' => 'add|edit'`
 - **submenu**: Auto explicativo rsrs.
 
